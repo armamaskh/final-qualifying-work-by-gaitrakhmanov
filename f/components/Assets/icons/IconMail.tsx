@@ -1,0 +1,61 @@
+"use client";
+import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
+export default function IconMail() {
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, [setMounted]);
+
+  if (!mounted) return null; 
+
+  return (
+    <Link href="" className='cursor-pointer hover:opacity-70'>
+      {resolvedTheme === 'dark' ? 
+
+         (
+            <svg width="12" 
+                 height="13" 
+                 viewBox="0 0 12 13" 
+                 fill="none" 
+                 xmlns="http://www.w3.org/2000/svg">
+                  <path 
+                        d="M1.5 4.66211C1.5 3.83368 2.17157 3.16211 3 3.16211H9C9.82843 3.16211 10.5 3.83368 10.5 4.66211V8.66211C10.5 9.49054 9.82843 10.1621 9 10.1621H3C2.17157 10.1621 1.5 9.49054 1.5 8.66211V4.66211Z" 
+                        stroke="rgba(100%,100%,100%, 0.70)" 
+                        strokeWidth="1.2"/>
+                  <path 
+                        d="M3.5 5.16211L6 7.16211L8.5 5.16211" 
+                        stroke="rgba(100%,100%,100%, 0.70)" 
+                        strokeWidth="1.2" 
+                        strokeLinecap="round"/>
+            </svg>
+         ) 
+         : 
+         (
+            <svg 
+                  width="12" 
+                  height="13" 
+                  viewBox="0 0 12 13" 
+                  fill="none" 
+                  xmlns="http://www.w3.org/2000/svg">
+
+                  <path 
+                        d="M1.5 4.66211C1.5 3.83368 2.17157 3.16211 3 3.16211H9C9.82843 3.16211 10.5 3.83368 10.5 4.66211V8.66211C10.5 9.49054 9.82843 10.1621 9 10.1621H3C2.17157 10.1621 1.5 9.49054 1.5 8.66211V4.66211Z" 
+                        stroke="rgba(0%,0%,0%, 0.70)" 
+                        strokeWidth="1.2"/>
+                  <path 
+                        d="M3.5 5.16211L6 7.16211L8.5 5.16211" 
+                        stroke="rgba(0%,0%,0%, 0.70)" 
+                        strokeWidth="1.2" 
+                        strokeLinecap="round"/>
+            </svg>       
+         )
+      }
+    </Link>
+  );
+};
+

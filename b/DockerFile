@@ -1,0 +1,21 @@
+
+FROM python:3.13.1-bookworm
+
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+WORKDIR /b
+
+RUN pip install --upgrade pip wheel "poetry==2.1.2"
+RUN poetry config virtualenvs.create false
+
+COPY  pyproject.toml poetry.lock ./
+RUN poetry install
+
+COPY . .
+
+RUN chmod +x prestart.sh
+ENTRYPOINT [ "./prestart.sh" ]
+
+CMD ["python", "main.py"]
+

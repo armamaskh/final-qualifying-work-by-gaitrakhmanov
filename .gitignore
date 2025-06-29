@@ -1,0 +1,5 @@
+b/.venv/
+b/.env
+b/.env.template
+f/node_modules/
+f/.env
