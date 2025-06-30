@@ -1,40 +1,11 @@
-FROM node:22-alpine AS base
-
-WORKDIR /f
-
-COPY package.json package-lock.json ./
-RUN npm install --legacy-peer-deps
-
-COPY . .
-
-FROM base AS build
-RUN npm run build
-
-FROM node:22-alpine AS production
-WORKDIR /f
-COPY --from=build /f/.next ./.next
-COPY --from=build /f/package.json ./package.json
-COPY --from=build /f/package-lock.json ./package-lock.json
-COPY --from=build /f/public ./public
-COPY --from=build /f/node_modules ./node_modules
-
-EXPOSE 3000
-
-CMD ["npm", "run", "start"]
-
-
-
-
 # FROM node:22-alpine AS base
+
 # WORKDIR /f
+
 # COPY package.json package-lock.json ./
 # RUN npm install --legacy-peer-deps
 
 # COPY . .
-
-# FROM base AS development
-# EXPOSE 3000
-# CMD ["npm", "run", "dev"]
 
 # FROM base AS build
 # RUN npm run build
@@ -47,9 +18,38 @@ CMD ["npm", "run", "start"]
 # COPY --from=build /f/public ./public
 # COPY --from=build /f/node_modules ./node_modules
 
-
 # EXPOSE 3000
+
 # CMD ["npm", "run", "start"]
+
+
+
+
+FROM node:22-alpine AS base
+WORKDIR /f
+COPY package.json package-lock.json ./
+RUN npm install --legacy-peer-deps
+
+COPY . .
+
+FROM base AS development
+EXPOSE 3000
+CMD ["npm", "run", "dev"]
+
+FROM base AS build
+RUN npm run build
+
+FROM node:22-alpine AS production
+WORKDIR /f
+COPY --from=build /f/.next ./.next
+COPY --from=build /f/package.json ./package.json
+COPY --from=build /f/package-lock.json ./package-lock.json
+COPY --from=build /f/public ./public
+COPY --from=build /f/node_modules ./node_modules
+
+
+EXPOSE 3000
+CMD ["npm", "run", "start"]
 
 
 

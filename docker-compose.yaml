@@ -33,6 +33,8 @@ services:
       context: ./f/
     ports:
       - "3000:3000"
+    env_file:
+      - f/.env
     depends_on:
       app_b:
         condition: service_healthy
