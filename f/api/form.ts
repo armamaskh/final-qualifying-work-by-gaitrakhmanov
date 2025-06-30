@@ -11,7 +11,7 @@ const API = AxiosInstance('');
 
 class UserNotFoundErr extends Error { }
 
-interface FormStats { visits: number;
+export interface FormStats { visits: number;
                       submissions: number;
                       submissionRate: number;
                       bounceRate: number; }

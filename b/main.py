@@ -26,6 +26,9 @@ main_app.add_middleware( CORSMiddleware,
                          allow_credentials = True,
                          allow_methods =["*"],
                          allow_headers = ["*"] )
+@main_app.get("/")
+async def root():
+   return{"message": "Welkome in final qualifying work!"}
 main_app.include_router( api_router )
 
 

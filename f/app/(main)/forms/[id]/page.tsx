@@ -6,12 +6,12 @@ import { FaWpforms } from 'react-icons/fa';
 import { HiCursorClick } from 'react-icons/hi';
 import { LuView } from 'react-icons/lu';
 import { TbArrowBounce } from 'react-icons/tb';
-import { StatsCard } from '../../page';
 import { ElementsType, FormElementInstance } from '@/components/FormElements/FormElements';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { format, formatDistance } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { StatsCard } from '@/components/CustomElementsUI/StatsFormsCards/StatsCards';
 
 interface FormPageProps {
   params: Promise<{ id: string }>; }

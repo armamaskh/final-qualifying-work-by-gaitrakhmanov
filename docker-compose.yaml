@@ -5,9 +5,7 @@ services:
       dockerfile: ./DockerFile
       context: ./b/
     environment:
-      APP_CONFIG__DB__URL: postgresql+asyncpg://admin:root@postgres_db:5432/db_collections
-    env_file:
-      - ./b/.env
+      APP_CONFIG__DB__URL: postgresql+asyncpg://user:password@postgres_db:5432/db_collections
     ports:
       - "8000:8000"
     volumes:
@@ -15,30 +13,48 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./b
+          target: /app_b
+        - action: rebuild
+          path: ./poetry.lock
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
 
   app_f:
     build:
       dockerfile: ./DockerFile
       context: ./f/
     ports:
-      - "3000:80"
+      - "3000:3000"
     depends_on:
-      - app_b
+      app_b:
+        condition: service_healthy
+
 
   postgres_db:    
     container_name:  postgres_db
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_DB: db_collections
-      POSTGRES_PASSWORD: root
-      POSTGRES_USER: admin
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
     image: postgres:17.5-alpine3.22
     healthcheck:
       test: ["CMD-SHELL", "pg_isready"]
       interval: 10s
       timeout: 5s
       retries: 3
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
       
 
   postgres_admin:
@@ -52,3 +68,6 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+
+volumes:
+  pgdata:
