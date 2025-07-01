@@ -39,12 +39,6 @@ export function CardStatsWrapper() {
     );
   }
 
-  // const [stats, setStats] = useState<FormStats | null>(null)
-
-  //   useEffect( () => { GetFormStats().then(setStats)
-  //   }, [])
-
-  // return <StatsCards loading={!stats} data={stats || undefined} /> }
 
 interface StatsCardProps{
   data?: Awaited<ReturnType<typeof GetFormStats>>,
@@ -84,16 +78,16 @@ export function StatsCards(props: StatsCardProps) {
   </div>
 }
 
-export function StatsCard({ title,
-                            value,
-                            helperText,
-                            className,
-                            loading,
-                            icon }:{  title: string,
-                                      value: string,
-                                      helperText: string,
-                                      className: string,
-                                      loading: boolean,
+function StatsCard({  title,
+                      value,
+                      helperText,
+                      className,
+                      loading,
+                      icon }:{  title: string,
+                                value: string,
+                                helperText: string,
+                                className: string,
+                                loading: boolean,
                                       icon: ReactNode }) {
       return (
         <Card className={className}>
