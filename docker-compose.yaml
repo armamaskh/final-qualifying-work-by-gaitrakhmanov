@@ -21,10 +21,12 @@ services:
         - action: rebuild
           path: ./poetry.lock
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 10s
       timeout: 5s
       retries: 3
+    networks:
+      - main
 
 
   app_f:
@@ -38,6 +40,8 @@ services:
     depends_on:
       app_b:
         condition: service_healthy
+    networks:
+      - main
 
 
   postgres_db:    
@@ -57,6 +61,8 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - main
       
 
   postgres_admin:
@@ -70,6 +76,23 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+    networks:
+      - main
+
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - app_b
+      - app_f
+    volumes:
+      - "./nginx.conf:/etc/nginx/nginx.conf"
+    networks:
+      - main
+    
 
 volumes:
   pgdata:
+networks:
+  main:

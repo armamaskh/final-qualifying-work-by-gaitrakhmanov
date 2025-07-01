@@ -4,14 +4,18 @@ import axios from 'axios';
 
 export const AxiosInstance = ( accessToken = '') => {
 
+   const BASE_URL =
+    typeof window === "undefined"
+      ? process.env.SERVER_URL 
+      : process.env.NEXT_PUBLIC_SERVER_URL; 
+
 
    const axiosInstance = axios.create({
-      baseURL: process.env.SERVER_URL,
+      baseURL: BASE_URL,
       headers: {  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${accessToken}` }   });
+                  'Authorization': `Bearer ${accessToken || "HnpHiTBp0DSyMmGzFVyHJDknNki-aNGeS6XKzaRHjFo"}` }   });
 
    const axiosGet = async(url: string = '') => {
-      console.log('SERVER_URL:', process.env.SERVER_URL);
       const response = await axiosInstance.get(url);
       return response.data; }
 
