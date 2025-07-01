@@ -7,7 +7,7 @@ class RunConfig(BaseModel):
 
 class AccessToken(BaseModel):
    secret: str = '7703a1b86c2351ed45b1109f5f0f0d35ee1f5f9021aea1473e7bcbaac19f7a775157657dc2d0e9cfa40a6a3845fd5361'
-   lifetime_seconds: int = 3600
+   lifetime_seconds: int = 3600000000000000
    reset_password_token_secret: str
    verification_token_secret: str
 
